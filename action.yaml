@@ -2,7 +2,8 @@ name: 'Last tested changes action'
 description: 'Pushes last tested changes'
 author: 'Miguel Andres-Martinez'
 runs:
-  using: '.github/workflows/push_last_tested_changes.yml'
+  using: 'docker'
+  image: 'Dockerfile'
 #outputs:
 #  new_ver:
 #    description: 'The new version after running bumpversion'
