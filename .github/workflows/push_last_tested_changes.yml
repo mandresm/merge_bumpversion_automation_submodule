@@ -1,0 +1,41 @@
+# ESM-Tests generalized workflow for computers
+# ============================================
+
+name: push_last_tested_changes
+
+# Called from other workflows
+on:
+  workflow_call:
+    inputs:
+      directory:
+        required: true
+        type: string
+        
+jobs:
+  push_last_tested_changes:
+  
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    
+    # Service containers to run with `gfortran_ubuntu`
+    steps:
+    
+    - uses: actions/checkout@v3
+      with:
+        submodules: true
+        fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    # Set the user to author the git actions of the runner    
+    - name: set user
+      run: |
+        git config --global user.name "${GITHUB_ACTOR}";
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        
+    - name: make changes
+      run: echo "new line" >> ./dummy.md
+      
+    - name: push changes
+      run: |
+        git push;
+      
